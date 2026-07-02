@@ -1,0 +1,12 @@
+requests
+pandas
+numpy
+scikit-learn
+streamlit
+plotly
+textblob
+yfinance
+finnhub-python
+newsapi-python
+python-dotenv
+anthropic
