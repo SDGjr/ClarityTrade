@@ -1,4 +1,4 @@
-import os
+import os  # ClarityTrade v2
 import anthropic
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
