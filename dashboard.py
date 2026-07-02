@@ -1,7 +1,7 @@
 import os
 import anthropic
 from datetime import datetime, timedelta
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 import yfinance as yf
 import streamlit as st
 import plotly.graph_objects as go
@@ -9,8 +9,14 @@ from newsapi import NewsApiClient
 from textblob import TextBlob
 
 load_dotenv()
-env = dotenv_values("C:/Users/sarch/trading-ai/.env")
-newsapi = NewsApiClient(api_key=env.get("NEWS_API_KEY"))
+
+def get_secret(key):
+    try:
+        return st.secrets[key]
+    except:
+        return os.getenv(key)
+
+newsapi = NewsApiClient(api_key=get_secret("NEWS_API_KEY"))
 
 st.set_page_config(page_title="ClarityTrade", page_icon="📊", layout="wide")
 st.title("📊 ClarityTrade")
@@ -153,7 +159,7 @@ if analizar or simbolo:
     st.divider()
     st.subheader("🤖 Análisis de ClarityTrade")
     with st.spinner("Generando análisis inteligente..."):
-        cliente_ai = anthropic.Anthropic(api_key=env.get("ANTHROPIC_API_KEY"))
+        cliente_ai = anthropic.Anthropic(api_key=get_secret("ANTHROPIC_API_KEY"))
         prompt = f"""Eres un analista financiero experto. Analiza estos datos de {nombre_empresa} ({simbolo}) y genera un párrafo de análisis profesional en español, claro y directo, de máximo 4 oraciones. MUY IMPORTANTE: no uses ningún formato markdown, sin asteriscos, sin ##, sin negritas, sin cursivas, sin símbolos especiales. Solo texto plano fluido que explique la situación actual y qué debería considerar un inversor.
 
 Datos:
@@ -171,7 +177,7 @@ Datos:
             messages=[{"role": "user", "content": prompt}]
         )
         analisis_ia = mensaje.content[0].text
-        st.markdown(f"_{analisis_ia}_")
+        st.markdown(analisis_ia)
 
     st.divider()
     st.subheader("📊 Precio — últimos 3 meses")
