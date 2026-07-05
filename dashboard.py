@@ -183,18 +183,22 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+   opciones = ["Inicio", "Mercado Live", "Análisis", "Noticias", "Calculadora", "Acerca de"]
+    idx_default = opciones.index(st.session_state.get("pagina", "Inicio"))
     pagina = st.radio(
         "",
-        ["Inicio", "Mercado Live", "Análisis", "Noticias", "Calculadora", "Acerca de"],
-        label_visibility="collapsed"
+        opciones,
+        index=idx_default,
+        label_visibility="collapsed",
+        key="nav_radio"
     )
+    st.session_state.pagina = pagina
 
+  st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="position:absolute; bottom:20px; left:0; right:0; padding:0 16px;">
-        <div style="background:#1A1A2E; border:1px solid #2D2D4A; border-radius:8px; padding:10px 12px; text-align:center;">
-            <div style="color:#8B8BAA; font-size:10px; margin-bottom:4px;">Puedes ocultar este menú</div>
-            <div style="color:#A78BFA; font-size:11px;">← Desliza para ocultar</div>
-        </div>
+    <div style="background:#1A1A2E; border:1px solid #2D2D4A; border-radius:8px; padding:8px 12px; text-align:center; margin-top:16px;">
+        <div style="color:#8B8BAA; font-size:10px; margin-bottom:3px;">Puedes ocultar este menú</div>
+        <div style="color:#A78BFA; font-size:11px;">← Desliza para ocultar</div>
     </div>
     """, unsafe_allow_html=True)
 
