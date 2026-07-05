@@ -167,11 +167,13 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     opciones = ["Inicio", "Mercado Live", "Análisis", "Noticias", "Calculadora", "Acerca de"]
-    idx_default = opciones.index(st.session_state.get("pagina", "Inicio"))
+    if "pagina" not in st.session_state:
+        st.session_state.pagina = "Inicio"
+
     pagina = st.radio(
         "",
         opciones,
-        index=idx_default,
+        index=opciones.index(st.session_state.pagina),
         label_visibility="collapsed",
         key="nav_radio"
     )
@@ -256,7 +258,6 @@ if pagina == "Inicio":
         if st.button("Más información", key="btn_acerca", use_container_width=True):
             st.session_state.pagina = "Acerca de"
             st.rerun()
-
 # ============================================================
 # MERCADO LIVE
 # ============================================================
@@ -582,6 +583,15 @@ Datos: Precio ${precio:.2f}, RSI {rsi:.1f}, Tendencia {'alcista' if ma20 > ma50 
 
         st.divider()
         st.markdown("<div class='section-label'>Noticias relacionadas</div>", unsafe_allow_html=True)
+        st.markdown("""
+        <div style="background:#1A1A2E;border:1px solid #2D2D4A;border-radius:8px;padding:10px 14px;margin-bottom:16px;">
+            <span style="color:#8B8BAA;font-size:12px;">
+                El indicador de sentimiento (Positivo / Neutral / Negativo) refleja el tono del titular 
+                de la noticia, no necesariamente su impacto en el precio del activo. 
+                Un titular "Negativo" puede describir una caída pasada, no predecir una futura.
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
         if noticias:
             for noticia in noticias[:6]:
                 s = TextBlob(noticia['title']).sentiment.polarity
