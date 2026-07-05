@@ -194,7 +194,7 @@ with st.sidebar:
     )
     st.session_state.pagina = pagina
 
-  st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
     <div style="background:#1A1A2E; border:1px solid #2D2D4A; border-radius:8px; padding:8px 12px; text-align:center; margin-top:16px;">
         <div style="color:#8B8BAA; font-size:10px; margin-bottom:3px;">Puedes ocultar este menú</div>
